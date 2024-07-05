@@ -1,0 +1,31 @@
+{
+  "name": "Shlink.ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build-docs": "npx typedoc ./src",
+    "build": "npx ts-node ./src/createExports.js && tsup src/index.ts --format cjs,esm --dts",
+    "lint": "tsc",
+    "gh-publish": "node ./src/github-util/gh_publish.js",
+    "npm-publish": "node ./src/github-util/npm_publish.js"
+  },
+  "keywords": [],
+  "author": "Bothim_TV",
+  "license": "MIT",
+  "repository": {
+    "url": "git+https://github.com/BothimTV/Shlink.ts.git"
+  },
+  "homepage": "shlinkts.bothimtv.com",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "fs": "0.0.1-security",
+    "tsup": "^8.1.0",
+    "typedoc": "^0.26.3"
+  }
+}

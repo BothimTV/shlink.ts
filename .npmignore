@@ -1,0 +1,9 @@
+/.github
+/src
+/tests
+/docs
+/.vsc
+
+jest.config.js
+tsconfig.json
+CNAME
