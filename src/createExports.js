@@ -1,6 +1,6 @@
 const { readdirSync, writeFileSync } = require("fs")
 
-const classFolders = ["ApiClient"]
+const classFolders = ["ApiClient", "builder"]
 
 const res = ["/* Auto generated */"]
 

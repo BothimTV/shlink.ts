@@ -12,8 +12,8 @@ export interface shortUrlListJson {
 }
 
 export interface shortUrlJson {
-  shortCode: string;
-  shortUrl: string;
+  readonly shortCode: string;
+  readonly shortUrl: string;
   longUrl: string;
   deviceLongUrls: {
     android: null | string;

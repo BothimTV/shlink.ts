@@ -1,6 +1,7 @@
 import axios, { RawAxiosRequestConfig } from "axios";
+import { ShortUrlBuilder } from "../builder/ShortUrlBuilder";
 import { OrderTypes } from "../types/orderType";
-import { shortUrlListJson } from "../types/shortUrl";
+import { shortUrlJson, shortUrlListJson } from "../types/shortUrl";
 import { ShortUrl } from "./ShortUrl";
 
 export class Shlink {
@@ -13,7 +14,7 @@ export class Shlink {
         this.host = new URL(host)
     }
 
-    private async api(options: RawAxiosRequestConfig): Promise<unknown> {
+    public async api(options: RawAxiosRequestConfig): Promise<unknown> {
         options.headers = options.headers ?? {}
         options.headers["X-Api-Key"] = this.apiKey
         options.baseURL = new URL(this.host.origin + options.baseURL).href
@@ -23,9 +24,9 @@ export class Shlink {
     }
 
     /**
-     * Get all short urls from this server.  
-     * This will return 10 items per page by default.  
-     * @returns Shorts URLs 
+     * Get all short urls from this server  
+     * This will return 10 items per page by default  
+     * @returns
      */
     public async getShortUrls(page?: number, itemsPerPage?: number, searchTerm?: string, tags?: string[], tagsMode?: "any" | "all", orderBy?: OrderTypes, startDate?: Date, endDate?: Date, excludeMaxVisitsReached?: boolean, excludePastValidUntil?: boolean): Promise<{page: number, maxPages:number, urls: ShortUrl[]}> {
         const url = new URL("https://example.com/rest/v3/short-urls")
@@ -49,5 +50,31 @@ export class Shlink {
         }
     }
 
+    /**
+     * Get a specific short url
+     * @param shortCode 
+     * @returns 
+     */
+    public async getShortUrl(shortCode: string): Promise<ShortUrl> {
+        const res = await this.api({
+            method: "GET",
+            url: `/rest/v3/short-urls/${shortCode}`
+        }) as shortUrlJson
+        return new ShortUrl(res, this)
+    }
+
+    /**
+     * Create a new short url
+     * @param shortUrlBuilder 
+     * @returns
+     */
+    public async createShortUrl(shortUrlBuilder: ShortUrlBuilder): Promise<ShortUrl> {
+        const res = await this.api({
+            method: "POST",
+            url: "/rest/v3/short-urls",
+            data: shortUrlBuilder
+        }) as shortUrlJson
+        return new ShortUrl(res, this)
+    }
 
 }
