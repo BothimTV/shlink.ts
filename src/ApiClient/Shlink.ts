@@ -1,5 +1,6 @@
-import axios, { RawAxiosRequestConfig } from "axios";
+import axios, { AxiosError, RawAxiosRequestConfig } from "axios";
 import { ShortUrlBuilder } from "../builder/ShortUrlBuilder";
+import { healthJson } from "../types/health";
 import { OrderTypes } from "../types/orderType";
 import { shortUrlJson, shortUrlListJson } from "../types/shortUrl";
 import { ShortUrl } from "./ShortUrl";
@@ -75,6 +76,25 @@ export class Shlink {
             data: shortUrlBuilder
         }) as shortUrlJson
         return new ShortUrl(res, this)
+    }
+
+    public async health(): Promise<healthJson> {
+        return await this.api({
+            method: "GET",
+            url: "/rest/health"
+        })
+            .then((res) => {
+                console.debug(res)
+                return res as healthJson
+            })
+            .catch((e) => {
+                console.error(e)
+                return (e as AxiosError).response?.data as healthJson
+            })
+    }
+
+    public async healthy(): Promise<boolean> {
+        return await this.health().then(res => res.status == "pass")
     }
 
 }
