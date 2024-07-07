@@ -22,7 +22,7 @@
   "author": "Bothim_TV",
   "license": "MIT",
   "repository": {
-    "url": "git+https://github.com/BothimTV/Shlink.ts.git"
+    "url": "git+https://github.com/BothimTV/shlink.ts.git"
   },
   "homepage": "shlinkts.bothimtv.com",
   "dependencies": {
