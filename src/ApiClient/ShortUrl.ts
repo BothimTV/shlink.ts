@@ -1,3 +1,5 @@
+import { Buffer } from 'buffer';
+import { CorrectionTypes } from '../types/correctionTypes';
 import { shortUrlJson } from "../types/shortUrl";
 import { Shlink } from "./Shlink";
 
@@ -220,6 +222,19 @@ export class ShortUrl implements shortUrlJson {
         var props = this.updateProps();
         props.deviceLongUrls.desktop = new URL(url).href;
         return await this.updateThis(props)
+    }
+
+    /**
+     * Get the QR-Code for this ShortUrl
+     * @returns 
+     */
+    public async getQrCode(size: number = 300, margin: number = 0, format: "png" | "svg" = "png", errorCorrection: CorrectionTypes = CorrectionTypes.LOW): Promise<Buffer> {
+        const imgBuffer = await client.api({
+            method: "GET",
+            url: `/${this.shortCode}/qr-code?size=${size}&format=${format}&margin=${margin}&errorCorrection=${errorCorrection}`,
+            responseType: "arraybuffer"
+        }) as Buffer;
+        return Buffer.from(imgBuffer)
     }
 
 }
