@@ -25,7 +25,7 @@ export class ShortUrl implements shortUrlJson {
     visitsSummary: { total: number; nonBots: number; bots: number };
     visitsCount: number;
 
-    constructor(json: shortUrlJson, client: Shlink) {
+    constructor(json: shortUrlJson, shClient: Shlink) {
         this.shortCode = json.shortCode;
         this.shortUrl = json.shortUrl;
         this.longUrl = json.longUrl;
@@ -43,7 +43,7 @@ export class ShortUrl implements shortUrlJson {
         this.forwardQuery = json.forwardQuery;
         this.visitsSummary = json.visitsSummary;
         this.visitsCount = json.visitsCount;
-        client = client;
+        client = shClient;
     }
 
     /**
