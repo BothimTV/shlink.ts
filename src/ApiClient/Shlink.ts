@@ -17,7 +17,7 @@ export class Shlink {
     public async api(options: RawAxiosRequestConfig): Promise<unknown> {
         options.headers = options.headers ?? {}
         options.headers["X-Api-Key"] = this.apiKey
-        options.baseURL = new URL(this.host.origin + options.baseURL).href
+        options.url = new URL(this.host.origin + options.url).href
         return await axios.request(options)
             .then(res => res.data)
             .catch(e => { throw new Error(`Axios error: ${e}`) })
@@ -28,7 +28,7 @@ export class Shlink {
      * This will return 10 items per page by default  
      * @returns
      */
-    public async getShortUrls(page?: number, itemsPerPage?: number, searchTerm?: string, tags?: string[], tagsMode?: "any" | "all", orderBy?: OrderTypes, startDate?: Date, endDate?: Date, excludeMaxVisitsReached?: boolean, excludePastValidUntil?: boolean): Promise<{page: number, maxPages:number, urls: ShortUrl[]}> {
+    public async getShortUrls(page?: number, itemsPerPage?: number, searchTerm?: string, tags?: string[], tagsMode?: "any" | "all", orderBy?: OrderTypes, startDate?: Date, endDate?: Date, excludeMaxVisitsReached?: boolean, excludePastValidUntil?: boolean): Promise<{ page: number, maxPages: number, urls: ShortUrl[] }> {
         const url = new URL("https://example.com/rest/v3/short-urls")
         if (page) url.searchParams.set("page", page.toString());
         if (itemsPerPage) url.searchParams.set("itemsPerPage", itemsPerPage.toString());
@@ -41,7 +41,7 @@ export class Shlink {
         if (excludeMaxVisitsReached) url.searchParams.set("excludeMaxVisitsReached", excludeMaxVisitsReached.toString());
         if (excludePastValidUntil) url.searchParams.set("excludePastValidUntil", excludePastValidUntil.toString());
         const res = await this.api({
-            baseURL: url.href.replace("https://example.com", "")
+            url: url.href.replace("https://example.com", "")
         }) as shortUrlListJson;
         return {
             page: res.shortUrls.pagination.currentPage,
