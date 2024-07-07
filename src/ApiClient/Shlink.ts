@@ -15,6 +15,11 @@ export class Shlink {
         this.host = new URL(host)
     }
 
+    /**
+     * Send a request to the API
+     * @param options 
+     * @returns 
+     */
     public async api(options: RawAxiosRequestConfig): Promise<unknown> {
         options.headers = options.headers ?? {}
         options.headers["X-Api-Key"] = this.apiKey
@@ -78,6 +83,10 @@ export class Shlink {
         return new ShortUrl(res, this)
     }
 
+    /**
+     * Get the health status of the server 
+     * @returns 
+     */
     public async health(): Promise<healthJson> {
         return await this.api({
             method: "GET",
@@ -93,6 +102,10 @@ export class Shlink {
             })
     }
 
+    /**
+     * Check if the server is healthy
+     * @returns 
+     */
     public async healthy(): Promise<boolean> {
         return await this.health().then(res => res.status == "pass")
     }
