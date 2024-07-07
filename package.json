@@ -1,7 +1,7 @@
 {
   "name": "shlink.ts",
   "version": "1.0.0",
-  "description": "",
+  "description": "Manage your shlink instance with this package",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -12,7 +12,13 @@
     "gh-publish": "node ./src/github-util/gh_publish.js",
     "npm-publish": "node ./src/github-util/npm_publish.js"
   },
-  "keywords": [],
+  "keywords": [
+    "shlink",
+    "wrapper",
+    "typescript",
+    "api",
+    "axios"
+  ],
   "author": "Bothim_TV",
   "license": "MIT",
   "repository": {
