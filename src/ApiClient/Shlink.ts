@@ -26,7 +26,10 @@ export class Shlink {
         options.url = new URL(this.host.origin + options.url).href
         return await axios.request(options)
             .then(res => res.data)
-            .catch(e => { throw new Error(`Axios error: ${e}`) })
+            .catch(e => {
+                const err = e as AxiosError
+                throw err.response?.data
+            })
     }
 
     /**
