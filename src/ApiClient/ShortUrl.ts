@@ -1,7 +1,9 @@
 import { Buffer } from 'buffer';
 import { CorrectionTypes } from '../types/correctionTypes';
 import { shortUrlJson } from "../types/shortUrl";
+import { visitListJson } from '../types/visits';
 import { Shlink } from "./Shlink";
+import { Visit } from './Visit';
 
 let client: Shlink;
 export class ShortUrl implements shortUrlJson {
@@ -235,6 +237,39 @@ export class ShortUrl implements shortUrlJson {
             responseType: "arraybuffer"
         }) as Buffer;
         return Buffer.from(imgBuffer)
+    }
+
+    /**
+     * Get the visits from this url
+     */
+    public async getVisits(startDate?: Date, endDate?: Date, page?: number, itemsPerPage?: number, excludeBots?: boolean): Promise<{ page: number, maxPages: number, visits: Visit[] }> {
+        const url = new URL(`https://example.com/rest/v3/short-urls/${this.shortCode}/visits`)
+        if (this.domain) url.searchParams.set("domain", this.domain)
+        if (startDate) url.searchParams.set("startDate", startDate.toISOString());
+        if (endDate) url.searchParams.set("endDate", endDate.toISOString());
+        if (page) url.searchParams.set("page", page.toString());
+        if (itemsPerPage) url.searchParams.set("itemsPerPage", itemsPerPage.toString());
+        if (excludeBots) url.searchParams.set("excludeBots", excludeBots.toString())
+        const res = await client.api({
+            url: url.href.replace("https://example.com", "")
+        }) as visitListJson;
+        return {
+            page: res.visits.pagination.currentPage,
+            maxPages: res.visits.pagination.pagesCount,
+            visits: res.visits.data.map(item => new Visit(item))
+        }
+    }
+
+    /**
+     * Delete the visits from this url
+     */
+    public async deleteVisits(): Promise<void> {
+        const url = new URL(`https://example.com/rest/v3/short-urls/${this.shortCode}/visits`)
+        if (this.domain) url.searchParams.set("domain", this.domain)
+        await client.api({
+            method: "DELETE",
+            url: url.href.replace("https://example.com", "")
+        })
     }
 
 }

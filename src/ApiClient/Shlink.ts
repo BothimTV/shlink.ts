@@ -4,6 +4,7 @@ import { healthJson } from "../types/health";
 import { ShortUrlOrderTypes, StatsTagOrderType, TagOrderType } from "../types/orderType";
 import { shortUrlJson, shortUrlListJson } from "../types/shortUrl";
 import { tagListJson } from "../types/tag";
+import { totalVisitsJson } from "../types/visits";
 import { ShortUrl } from "./ShortUrl";
 import { Tag } from "./Tag";
 
@@ -121,7 +122,7 @@ export class Shlink {
      * Important! Ordering by shortUrlsCount, visits or nonBotVisits has a known performance issue which makes loading a subset of the list take as much as loading the whole list.  
      * @returns 
      */
-    public async getTags(includeStats?: boolean,page?: number, itemsPerPage?: number, searchTerm?: string, orderBy?: TagOrderType | StatsTagOrderType): Promise<{ page: number, maxPages: number, tags: Tag[] }> {
+    public async getTags(includeStats?: boolean, page?: number, itemsPerPage?: number, searchTerm?: string, orderBy?: TagOrderType | StatsTagOrderType): Promise<{ page: number, maxPages: number, tags: Tag[] }> {
         const url = new URL(`https://example.com/rest/v3/tags/${includeStats ? "stats" : ""}`)
         if (page) url.searchParams.set("page", page.toString());
         if (itemsPerPage) url.searchParams.set("itemsPerPage", itemsPerPage.toString());
@@ -167,6 +168,16 @@ export class Shlink {
                 tags: tagList
             }
         })
+    }
+
+    /**
+     * Get the visit count from this server
+     */
+    public async getVisitCount(): Promise<totalVisitsJson> {
+        return await this.api({
+            method: "GET",
+            url: `/rest/v3/visits`
+        }) as totalVisitsJson;
     }
 
 }
