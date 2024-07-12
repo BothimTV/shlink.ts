@@ -1,9 +1,11 @@
 import axios, { AxiosError, RawAxiosRequestConfig } from "axios";
 import { ShortUrlBuilder } from "../builder/ShortUrlBuilder";
 import { healthJson } from "../types/health";
-import { OrderTypes } from "../types/orderType";
+import { ShortUrlOrderTypes, StatsTagOrderType, TagOrderType } from "../types/orderType";
 import { shortUrlJson, shortUrlListJson } from "../types/shortUrl";
+import { tagListJson } from "../types/tag";
 import { ShortUrl } from "./ShortUrl";
+import { Tag } from "./Tag";
 
 export class Shlink {
 
@@ -37,7 +39,7 @@ export class Shlink {
      * This will return 10 items per page by default  
      * @returns
      */
-    public async getShortUrls(page?: number, itemsPerPage?: number, searchTerm?: string, tags?: string[], tagsMode?: "any" | "all", orderBy?: OrderTypes, startDate?: Date, endDate?: Date, excludeMaxVisitsReached?: boolean, excludePastValidUntil?: boolean): Promise<{ page: number, maxPages: number, urls: ShortUrl[] }> {
+    public async getShortUrls(page?: number, itemsPerPage?: number, searchTerm?: string, tags?: string[], tagsMode?: "any" | "all", orderBy?: ShortUrlOrderTypes, startDate?: Date, endDate?: Date, excludeMaxVisitsReached?: boolean, excludePastValidUntil?: boolean): Promise<{ page: number, maxPages: number, urls: ShortUrl[] }> {
         const url = new URL("https://example.com/rest/v3/short-urls")
         if (page) url.searchParams.set("page", page.toString());
         if (itemsPerPage) url.searchParams.set("itemsPerPage", itemsPerPage.toString());
@@ -111,6 +113,60 @@ export class Shlink {
      */
     public async healthy(): Promise<boolean> {
         return await this.health().then(res => res.status == "pass")
+    }
+
+    /**
+     * Get all tags from this server  
+     * 
+     * Important! Ordering by shortUrlsCount, visits or nonBotVisits has a known performance issue which makes loading a subset of the list take as much as loading the whole list.  
+     * @returns 
+     */
+    public async getTags(includeStats?: boolean,page?: number, itemsPerPage?: number, searchTerm?: string, orderBy?: TagOrderType | StatsTagOrderType): Promise<{ page: number, maxPages: number, tags: Tag[] }> {
+        const url = new URL(`https://example.com/rest/v3/tags/${includeStats ? "stats" : ""}`)
+        if (page) url.searchParams.set("page", page.toString());
+        if (itemsPerPage) url.searchParams.set("itemsPerPage", itemsPerPage.toString());
+        if (searchTerm) url.searchParams.set("searchTerm", searchTerm);
+        if (orderBy) url.searchParams.set("orderBy", orderBy);
+        const res = await this.api({
+            url: url.href.replace("https://example.com", "")
+        }) as tagListJson;
+        return {
+            page: res.shortUrls.pagination.currentPage,
+            maxPages: res.shortUrls.pagination.pagesCount,
+            tags: res.shortUrls.data.map(item => new Tag(item, this))
+        }
+    }
+
+    /**
+     * Rename a tag of this server
+     */
+    public async renameTag(tag: string | Tag, newName: string): Promise<void> {
+        await this.api({
+            method: "PUT",
+            url: `/rest/v3/tags`,
+            data: {
+                oldName: typeof tag == "string" ? tag : tag.tag,
+                newName: newName
+            }
+        })
+    }
+
+    /**
+     * Delete tags from this server
+     */
+    public async deleteTags(tags: Array<string | Tag>): Promise<void> {
+        const tagList: Array<string> = []
+        tags.forEach(tag => {
+            if (typeof tag === "string") tagList.push(tag)
+            else tagList.push(tag.tag)
+        })
+        await this.api({
+            method: "DELETE",
+            url: `/rest/v3/tags`,
+            data: {
+                tags: tagList
+            }
+        })
     }
 
 }
