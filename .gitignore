@@ -2,5 +2,5 @@ node_modules
 dist
 src/index.ts
 docs/CNAME
-.vsc
+.vscode
 docs
