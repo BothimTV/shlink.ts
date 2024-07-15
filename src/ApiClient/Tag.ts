@@ -1,6 +1,7 @@
-import { Visit, visitListJson } from "..";
 import { statsTagJson } from "../types/tag";
+import { visitListJson } from "../types/visits";
 import { Shlink } from "./Shlink";
+import { Visit } from "./Visit";
 
 let client: Shlink;
 export class Tag {
