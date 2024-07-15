@@ -1,7 +1,9 @@
 import { Buffer } from 'buffer';
 import { CorrectionTypes } from '../types/correctionTypes';
+import { domainListJson } from '../types/domain';
 import { shortUrlJson } from "../types/shortUrl";
 import { visitListJson } from '../types/visits';
+import { Domain } from './Domain';
 import { Shlink } from "./Shlink";
 import { Visit } from './Visit';
 
@@ -270,6 +272,20 @@ export class ShortUrl implements shortUrlJson {
             method: "DELETE",
             url: url.href.replace("https://example.com", "")
         })
+    }
+
+    /**
+     * Get all configured domains from this server
+     */
+    public async getDomains(): Promise<{ default: { baseUrlRedirect: string | null, regular404Redirect: string | null, invalidShortUrlRedirect: string | null }, domains: Domain[]}> {
+        const res = await client.api({
+            method: "GET",
+            url: `/rest/v3/short-urls/${this.shortCode}/domains`
+        }) as domainListJson;
+        return {
+            default: res.domains.defaultRedirects,
+            domains: res.domains.data.map(item => new Domain(item, client))
+        }
     }
 
 }
