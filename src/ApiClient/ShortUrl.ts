@@ -58,7 +58,7 @@ export class ShortUrl implements shortUrlJson {
     public async delete(): Promise<void> {
         await client.api({
             method: "DELETE",
-            url: `/rest/v3/short-urls/${this.shortCode}`
+            url: `/rest/v3/short-urls/${this.shortCode}?domain=${this.domain}`
         })
     }
 
