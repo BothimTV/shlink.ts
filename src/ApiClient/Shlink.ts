@@ -40,12 +40,14 @@ export class Shlink {
      * This will return 10 items per page by default  
      * @returns
      */
-    public async getShortUrls(page?: number, itemsPerPage?: number, searchTerm?: string, tags?: string[], tagsMode?: "any" | "all", orderBy?: ShortUrlOrderTypes, startDate?: Date, endDate?: Date, excludeMaxVisitsReached?: boolean, excludePastValidUntil?: boolean): Promise<{ page: number, maxPages: number, urls: ShortUrl[] }> {
+    public async getShortUrls(page?: number, itemsPerPage?: number, searchTerm?: string, tags: string[] = [], tagsMode?: "any" | "all", orderBy?: ShortUrlOrderTypes, startDate?: Date, endDate?: Date, excludeMaxVisitsReached?: boolean, excludePastValidUntil?: boolean): Promise<{ page: number, maxPages: number, urls: ShortUrl[] }> {
         const url = new URL("https://example.com/rest/v3/short-urls")
         if (page) url.searchParams.set("page", page.toString());
         if (itemsPerPage) url.searchParams.set("itemsPerPage", itemsPerPage.toString());
         if (searchTerm) url.searchParams.set("searchTerm", searchTerm);
-        if (tags) url.searchParams.set("tags", tags.join(","));
+        for (const tag of tags) {
+            url.searchParams.append("tags[]", tag)
+        }
         if (tagsMode) url.searchParams.set("tagsMode", tagsMode);
         if (orderBy) url.searchParams.set("orderBy", orderBy);
         if (startDate) url.searchParams.set("startDate", startDate.toISOString());
