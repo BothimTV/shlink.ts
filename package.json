@@ -1,6 +1,6 @@
 {
   "name": "shlink.ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Manage your shlink instance with this package",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -29,11 +29,11 @@
     "axios": "^1.7.2"
   },
   "devDependencies": {
-    "@types/node": "^20.14.10",
+    "@types/node": "^20.14.11",
     "buffer": "^6.0.3",
     "fs": "0.0.1-security",
     "ts-node": "^10.9.2",
-    "tsup": "^8.1.0",
+    "tsup": "^8.1.1",
     "typedoc": "^0.26.4",
     "typescript": "^5.5.3"
   }
