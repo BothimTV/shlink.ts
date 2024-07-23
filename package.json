@@ -29,7 +29,6 @@
     "axios": "^1.7.2"
   },
   "devDependencies": {
-    "@swc/core": "^1.6.13",
     "@types/node": "^20.14.11",
     "buffer": "^6.0.3",
     "fs": "0.0.1-security",
