@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@swc/core": "^1.6.13",
-    "@types/node": "^20.14.11",
+    "@types/node": "^22.0.0",
     "buffer": "^6.0.3",
     "fs": "0.0.1-security",
     "ts-node": "^10.9.2",
