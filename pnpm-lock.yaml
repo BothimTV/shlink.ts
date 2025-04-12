@@ -26,10 +26,10 @@ importers:
         version: 10.9.2(@swc/core@1.6.13)(@types/node@22.14.0)(typescript@5.8.2)
       tsup:
         specifier: ^8.1.1
-        version: 8.4.0(@swc/core@1.6.13)(typescript@5.8.2)(yaml@2.7.0)
+        version: 8.4.0(@swc/core@1.6.13)(typescript@5.8.2)(yaml@2.7.1)
       typedoc:
         specifier: ^0.28.0
-        version: 0.28.1(typescript@5.8.2)
+        version: 0.28.2(typescript@5.8.2)
       typescript:
         specifier: ^5.5.3
         version: 5.8.2
@@ -190,8 +190,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@gerrit0/mini-shiki@3.2.1':
-    resolution: {integrity: sha512-HbzRC6MKB6U8kQhczz0APKPIzFHTrcqhaC7es2EXInq1SpjPVnpVSIsBe6hNoLWqqCx1n5VKiPXq6PfXnHZKOQ==}
+  '@gerrit0/mini-shiki@3.2.2':
+    resolution: {integrity: sha512-vaZNGhGLKMY14HbF53xxHNgFO9Wz+t5lTlGNpl2N9xFiKQ0I5oIe0vKjU9dh7Nb3Dw6lZ7wqUE0ri+zcdpnK+Q==}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -319,6 +319,12 @@ packages:
 
   '@shikijs/engine-oniguruma@3.2.1':
     resolution: {integrity: sha512-wZZAkayEn6qu2+YjenEoFqj0OyQI64EWsNR6/71d1EkG4sxEOFooowKivsWPpaWNBu3sxAG+zPz5kzBL/SsreQ==}
+
+  '@shikijs/langs@3.2.1':
+    resolution: {integrity: sha512-If0iDHYRSGbihiA8+7uRsgb1er1Yj11pwpX1c6HLYnizDsKAw5iaT3JXj5ZpaimXSWky/IhxTm7C6nkiYVym+A==}
+
+  '@shikijs/themes@3.2.1':
+    resolution: {integrity: sha512-k5DKJUT8IldBvAm8WcrDT5+7GA7se6lLksR+2E3SvyqGTyFMzU2F9Gb7rmD+t+Pga1MKrYFxDIeyWjMZWM6uBQ==}
 
   '@shikijs/types@3.2.1':
     resolution: {integrity: sha512-/NTWAk4KE2M8uac0RhOsIhYQf4pdU0OywQuYDGIGAJ6Mjunxl2cGiuLkvu4HLCMn+OTTLRWkjZITp+aYJv60yA==}
@@ -878,8 +884,8 @@ packages:
       typescript:
         optional: true
 
-  typedoc@0.28.1:
-    resolution: {integrity: sha512-Mn2VPNMaxoe/hlBiLriG4U55oyAa3Xo+8HbtEwV7F5WEOPXqtxzGuMZhJYHaqFJpajeQ6ZDUC2c990NAtTbdgw==}
+  typedoc@0.28.2:
+    resolution: {integrity: sha512-9Giuv+eppFKnJ0oi+vxqLM817b/IrIsEMYgy3jj6zdvppAfDqV3d6DXL2vXUg2TnlL62V48th25Zf/tcQKAJdg==}
     engines: {node: '>= 18', pnpm: '>= 10'}
     hasBin: true
     peerDependencies:
@@ -918,8 +924,8 @@ packages:
     resolution: {integrity: sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ==}
     engines: {node: '>=12'}
 
-  yaml@2.7.0:
-    resolution: {integrity: sha512-+hSoy/QHluxmC9kCIJyL/uyFmLmc+e5CFR5Wa+bpIhIj85LVb9ZH2nVnqrHoSvKogwODv0ClqZkmiSSaIH5LTA==}
+  yaml@2.7.1:
+    resolution: {integrity: sha512-10ULxpnOCQXxJvBgxsn9ptjq6uviG/htZKk9veJGhlqn3w/DxQ631zFF+nlQXLwmImeS5amR2dl2U8sg6U9jsQ==}
     engines: {node: '>= 14'}
     hasBin: true
 
@@ -1008,9 +1014,11 @@ snapshots:
   '@esbuild/win32-x64@0.25.0':
     optional: true
 
-  '@gerrit0/mini-shiki@3.2.1':
+  '@gerrit0/mini-shiki@3.2.2':
     dependencies:
       '@shikijs/engine-oniguruma': 3.2.1
+      '@shikijs/langs': 3.2.1
+      '@shikijs/themes': 3.2.1
       '@shikijs/types': 3.2.1
       '@shikijs/vscode-textmate': 10.0.2
 
@@ -1109,6 +1117,14 @@ snapshots:
     dependencies:
       '@shikijs/types': 3.2.1
       '@shikijs/vscode-textmate': 10.0.2
+
+  '@shikijs/langs@3.2.1':
+    dependencies:
+      '@shikijs/types': 3.2.1
+
+  '@shikijs/themes@3.2.1':
+    dependencies:
+      '@shikijs/types': 3.2.1
 
   '@shikijs/types@3.2.1':
     dependencies:
@@ -1486,11 +1502,11 @@ snapshots:
 
   pirates@4.0.6: {}
 
-  postcss-load-config@6.0.1(yaml@2.7.0):
+  postcss-load-config@6.0.1(yaml@2.7.1):
     dependencies:
       lilconfig: 3.1.3
     optionalDependencies:
-      yaml: 2.7.0
+      yaml: 2.7.1
 
   proxy-from-env@1.1.0: {}
 
@@ -1612,7 +1628,7 @@ snapshots:
     optionalDependencies:
       '@swc/core': 1.6.13
 
-  tsup@8.4.0(@swc/core@1.6.13)(typescript@5.8.2)(yaml@2.7.0):
+  tsup@8.4.0(@swc/core@1.6.13)(typescript@5.8.2)(yaml@2.7.1):
     dependencies:
       bundle-require: 5.1.0(esbuild@0.25.0)
       cac: 6.7.14
@@ -1622,7 +1638,7 @@ snapshots:
       esbuild: 0.25.0
       joycon: 3.1.1
       picocolors: 1.1.1
-      postcss-load-config: 6.0.1(yaml@2.7.0)
+      postcss-load-config: 6.0.1(yaml@2.7.1)
       resolve-from: 5.0.0
       rollup: 4.34.9
       source-map: 0.8.0-beta.0
@@ -1639,14 +1655,14 @@ snapshots:
       - tsx
       - yaml
 
-  typedoc@0.28.1(typescript@5.8.2):
+  typedoc@0.28.2(typescript@5.8.2):
     dependencies:
-      '@gerrit0/mini-shiki': 3.2.1
+      '@gerrit0/mini-shiki': 3.2.2
       lunr: 2.3.9
       markdown-it: 14.1.0
       minimatch: 9.0.5
       typescript: 5.8.2
-      yaml: 2.7.0
+      yaml: 2.7.1
 
   typescript@5.8.2: {}
 
@@ -1680,6 +1696,6 @@ snapshots:
       string-width: 5.1.2
       strip-ansi: 7.1.0
 
-  yaml@2.7.0: {}
+  yaml@2.7.1: {}
 
   yn@3.1.1: {}
