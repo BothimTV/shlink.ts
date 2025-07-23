@@ -26,10 +26,10 @@
   },
   "homepage": "shlinkts.bothimtv.com",
   "dependencies": {
-    "axios": "^1.7.2"
+    "axios": "^1.11.0"
   },
   "devDependencies": {
-    "@types/node": "^24.0.1",
+    "@types/node": "^24.1.0",
     "buffer": "^6.0.3",
     "fs": "0.0.1-security",
     "ts-node": "^10.9.2",
